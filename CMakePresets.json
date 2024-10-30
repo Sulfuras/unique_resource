@@ -1,0 +1,204 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 22,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "hidden": true,
+      "description": "Default build using Visual Studio 17 2022 generator",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "generator": "Visual Studio 17 2022",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe",
+        "CMAKE_CONFIGURATION_TYPES": "Debug;Release;",
+        "CMAKE_COMPILE_WARNING_AS_ERROR": false,
+        "CMAKE_VERBOSE_MAKEFILE": false,
+        "SANITIZE": "address"
+      },
+      "toolset": {
+        "value": "v143,host=x64",
+        "strategy": "set"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "debug",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "x86",
+      "hidden": true,
+      "architecture": {
+        "value": "x86",
+        "strategy": "set"
+      }
+    },
+    {
+      "name": "x64",
+      "hidden": true,
+      "architecture": {
+        "value": "x64",
+        "strategy": "set"
+      }
+    },
+    {
+      "name": "arm64ec",
+      "hidden": true,
+      "displayName": "arm64ec",
+      "architecture": {
+        "value": "arm64ec",
+        "strategy": "set"
+      }
+    },
+    {
+      "name": "x86-debug",
+      "displayName": "Windows x86 Debug Config",
+      "description": "Windows x86 Debug Config build using Visual Studio 17 2022 generator",
+      "inherits": [
+        "default",
+        "x86"
+      ]
+    },
+    {
+      "name": "x86-release",
+      "displayName": "Windows x86 Release Config",
+      "description": "Windows x86 Release Config build using Visual Studio 17 2022 generator",
+      "inherits": [
+        "default",
+        "x86"
+      ]
+    },
+    {
+      "name": "x64-debug",
+      "displayName": "Windows x64 Debug Config",
+      "description": "Windows x64 Debug Config build using Visual Studio 17 2022 generator",
+      "inherits": [
+        "default",
+        "x64"
+      ]
+    },
+    {
+      "name": "x64-release",
+      "displayName": "Windows x64 Release Config",
+      "description": "Windows x64 Release Config build using Visual Studio 17 2022 generator",
+      "inherits": [
+        "default",
+        "x64"
+      ]
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "x86-debug",
+      "displayName": "x86 debug",
+      "configurePreset": "x86-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "x86-release",
+      "displayName": "x86 release",
+      "configurePreset": "x86-release",
+      "configuration": "Release"
+    },
+    {
+      "name": "x64-debug",
+      "displayName": "x64 debug",
+      "configurePreset": "x64-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "x64-release",
+      "displayName": "x64 release",
+      "configurePreset": "x64-release",
+      "configuration": "Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "default",
+      "hidden": true,
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "x86-debug",
+      "displayName": "x86 debug",
+      "configurePreset": "x86-debug",
+      "configuration": "Debug",
+      "inherits": [
+        "default"
+      ]
+    },
+    {
+      "name": "x86-release",
+      "displayName": "x86 release",
+      "configurePreset": "x86-release",
+      "configuration": "Release",
+      "inherits": [
+        "default"
+      ]
+    },
+    {
+      "name": "x64-debug",
+      "displayName": "x64 debug",
+      "configurePreset": "x64-debug",
+      "configuration": "Debug",
+      "inherits": [
+        "default"
+      ]
+    },
+    {
+      "name": "x64-release",
+      "displayName": "x64 release",
+      "configurePreset": "x64-release",
+      "configuration": "Release",
+      "inherits": [
+        "default"
+      ]
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "default",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "x64-debug"
+        },
+        {
+          "type": "build",
+          "name": "x64-debug"
+        },
+        {
+          "type": "test",
+          "name": "x64-debug"
+        }
+      ]
+    }
+  ]
+}
