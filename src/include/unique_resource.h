@@ -3,10 +3,10 @@
 #include <memory>
 #include <utility>
 
-#define UNIQUE_RESOURCE_NOEXCEPT_NOEXCEPT_THIS_RESET noexcept( noexcept( this->reset() ) )
-#define UNIQUE_RESOURCE_NOEXCEPT_NOEXCEPT_THIS_DELETER_CALL noexcept( noexcept( this->get_deleter()( resource ) ) )
+//#define UNIQUE_RESOURCE_NOEXCEPT_NOEXCEPT_THIS_RESET noexcept( noexcept( this->reset() ) )
+//#define UNIQUE_RESOURCE_NOEXCEPT_NOEXCEPT_THIS_DELETER_CALL noexcept( noexcept( this->get_deleter()( resource ) ) )
 
-namespace std_experimental {
+namespace std {
 
     template< typename R, typename D >
     class unique_resource
@@ -34,7 +34,7 @@ namespace std_experimental {
             other.release();
         }
 
-        unique_resource &operator=( unique_resource &&other ) UNIQUE_RESOURCE_NOEXCEPT_NOEXCEPT_THIS_RESET
+        unique_resource &operator=( unique_resource &&other ) noexcept
         {
             this->reset();
             this->deleter = std::move( other.deleter );
@@ -45,12 +45,12 @@ namespace std_experimental {
         }
 
         // resource release
-        ~unique_resource() UNIQUE_RESOURCE_NOEXCEPT_NOEXCEPT_THIS_RESET
+        ~unique_resource() noexcept
         {
             this->reset();
         }
 
-        void reset() UNIQUE_RESOURCE_NOEXCEPT_NOEXCEPT_THIS_DELETER_CALL
+        void reset() noexcept
         {
             if( execute_on_destruction ) {
                 this->execute_on_destruction = false;
@@ -58,7 +58,7 @@ namespace std_experimental {
             }
         }
 
-        void reset( R &&newresource ) UNIQUE_RESOURCE_NOEXCEPT_NOEXCEPT_THIS_RESET
+        void reset( R &&newresource ) noexcept
         {
             this->reset();
             this->resource = std::move( newresource );

@@ -3,7 +3,7 @@
 include(CTest)
 include(GoogleTest)
 
-add_executable(test_unique_resource "main.cpp" "include/gtest.h" "test_unique_resource.cpp")
+add_executable(test_unique_resource "main.cpp" "include/gtest.h" "test_unique_resource.cpp" "test_test.cpp")
 
 target_include_directories(test_unique_resource PUBLIC include)
 
